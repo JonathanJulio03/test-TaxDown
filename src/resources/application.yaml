@@ -8,6 +8,3 @@ database:
   username: root
   password: 123456
   database: customers
-
-security:
-  jweSecret: 3ZZK5Q7CDQLV210642W7ZWXC6NB3IFQJ

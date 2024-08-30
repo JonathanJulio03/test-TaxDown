@@ -2,7 +2,6 @@ import { CustomerService } from "../../../src/application/services/customer-serv
 import { CustomerController } from "../../../src/infrastructure/controllers/customer.controllers";
 import { Request, Response } from "express";
 import BadError from "../../../src/infrastructure/errors/bad-error";
-import { v4 as uuidv4 } from 'uuid';
 
 // Successfully retrieve a customer by ID
 it('should return customer data when a valid ID is provided', async () => {
@@ -11,11 +10,12 @@ it('should return customer data when a valid ID is provided', async () => {
     const customerServiceMock = {
         getById: jest.fn().mockResolvedValue({ id: '01a7dc1a-4db2-4703-a085-3f7ecfdaf182', firstName: 'John' })
     };
+
     jest.spyOn(CustomerService.prototype, 'getById').mockImplementation(customerServiceMock.getById);
 
     await CustomerController.getById(req, res);
 
-    expect(customerServiceMock.getById).toHaveBeenCalledWith('01a7dc1a-4db2-4703-a085-3f7ecfdaf182', uuidv4());
+    expect(customerServiceMock.getById).toHaveBeenCalledWith('01a7dc1a-4db2-4703-a085-3f7ecfdaf182', '');
 });
 
 // Attempt to retrieve a customer with a non-existent ID
@@ -29,7 +29,7 @@ it('should return 404 error when customer ID does not exist', async () => {
 
     await CustomerController.getById(req, res);
 
-    expect(customerServiceMock.getById).toHaveBeenCalledWith('999', uuidv4());
+    expect(customerServiceMock.getById).toHaveBeenCalledWith('999', '');
     expect(res.status).toHaveBeenCalledWith(404);
     expect(res.json).toHaveBeenCalledWith({ message: 'Customer not found!' });
 });
@@ -52,7 +52,7 @@ it('should return a list of customers when the service returns data', async () =
 
     await CustomerController.get(req, res);
 
-    expect(customerServiceMock.get).toHaveBeenCalledWith('DESC', uuidv4());
+    expect(customerServiceMock.get).toHaveBeenCalledWith('DESC', '');
     expect(res.json).toHaveBeenCalledWith(mockCustomers);
 });
 
@@ -74,7 +74,7 @@ it('should handle when the CustomerService throws a BaseError', async () => {
 
     await CustomerController.get(req, res);
 
-    expect(customerServiceMock.get).toHaveBeenCalledWith('DESC', uuidv4());
+    expect(customerServiceMock.get).toHaveBeenCalledWith('DESC', '');
     expect(res.status).toHaveBeenCalledWith(404);
     expect(res.json).toHaveBeenCalledWith({ message: error.message });
 });
@@ -149,7 +149,7 @@ it('should update the customer successfully when valid id and data are provided'
 
     await CustomerController.update(req as any, res as any);
 
-    expect(customerServiceMock.update).toHaveBeenCalledWith('01a7dc1a-4db2-4703-a085-3f7ecfdaf182', req.body, uuidv4());
+    expect(customerServiceMock.update).toHaveBeenCalledWith('01a7dc1a-4db2-4703-a085-3f7ecfdaf182', req.body, '');
 });
 
 // Handles non-existent customer id gracefully
@@ -187,6 +187,6 @@ it('should delete a customer when a valid ID is provided', async () => {
 
     await CustomerController.delete(req as any, res as any);
 
-    expect(customerServiceMock.delete).toHaveBeenCalledWith('01a7dc1a-4db2-4703-a085-3f7ecfdaf182', uuidv4());
+    expect(customerServiceMock.delete).toHaveBeenCalledWith('01a7dc1a-4db2-4703-a085-3f7ecfdaf182', '');
     expect(res.sendStatus).toHaveBeenCalledWith(204);
 });

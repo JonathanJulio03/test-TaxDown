@@ -21,6 +21,7 @@
       "@controllers/*": ["src/infrastructure/controllers/*"],
       "@adapters/*": ["src/infrastructure/driven-adapter/*"],
       "@routes/*": ["src/infrastructure/routes/*"],
+      "@utils/*": ["src/infrastructure/utils/*"],
       "@config/*": ["src/application/config/*"],
       "@in/*": ["src/application/port/in/*"],
       "@out/*": ["src/application/port/out/*"],
