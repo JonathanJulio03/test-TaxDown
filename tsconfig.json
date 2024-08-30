@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "commonjs",
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "esModuleInterop": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "strictPropertyInitialization": false,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "baseUrl": "./",
+    "paths": {
+      "@database/*": ["src/infrastructure/database/*"],
+      "@entities/*": ["src/infrastructure/database/entities/*"],
+      "@error/*": ["src/infrastructure/errors/*"],
+      "@middleware/*": ["src/infrastructure/middleware/*"],
+      "@controllers/*": ["src/infrastructure/controllers/*"],
+      "@adapters/*": ["src/infrastructure/driven-adapter/*"],
+      "@routes/*": ["src/infrastructure/routes/*"],
+      "@config/*": ["src/application/config/*"],
+      "@in/*": ["src/application/port/in/*"],
+      "@out/*": ["src/application/port/out/*"],
+      "@services/*": ["src/application/services/*"],
+      "@models/*": ["src/domain/models/*"]
+    }
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules"]
+}
