@@ -7,4 +7,8 @@ export class Customer {
     phone: string;
     address: string;
     creditAvailable: number;
+
+    constructor(data: Partial<Customer>) {
+        Object.assign(this, data);
+    }
 }

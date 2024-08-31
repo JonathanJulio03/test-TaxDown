@@ -2,9 +2,12 @@ server:
   port: 3000
 
 database:
-  dialect: postgres
-  host: postgres
-  port: 5432
-  username: root
-  password: 123456
-  database: customers
+  dialect: ${DATABASE_DIALECT}
+  host: ${DATABASE_HOST}
+  port: ${DATABASE_PORT}
+  username: ${DATABASE_USERNAME}
+  password: ${DATABASE_PASSWORD}
+  database: ${DATABASE_NAME}
+  
+security:
+  secret: ${SECRET}

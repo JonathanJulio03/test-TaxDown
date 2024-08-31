@@ -1,20 +1,24 @@
 import { CustomerController } from '@controllers/customer.controllers';
-import { bodyPatchSchema, bodySchema } from '@controllers/request/validate';
-import validateBody from '@middleware/validate-body';
+import { decryptMiddleware } from '@middleware/decrypt';
+import { encryptMiddleware } from '@middleware/encrypt';
 import { Router } from 'express'
 
 
 const router = Router()
 
+// Use middleware for decryption and encryption
+router.use(decryptMiddleware);
+router.use(encryptMiddleware);
+
 router.get('/customers/:id', CustomerController.getById);
 
 router.get("/customers", CustomerController.get);
 
-router.post("/customers", validateBody(bodySchema), CustomerController.create);
+router.post("/customers", CustomerController.create);
 
-router.put("/customers/:id", validateBody(bodySchema), CustomerController.update);
+router.put("/customers/:id", CustomerController.update);
 
-router.patch("/customers/:id", validateBody(bodyPatchSchema), CustomerController.patch);
+router.patch("/customers/:id", CustomerController.patch);
 
 router.delete("/customers/:id", CustomerController.delete);
 

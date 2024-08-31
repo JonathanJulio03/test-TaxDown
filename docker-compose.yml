@@ -38,6 +38,7 @@ services:
       DATABASE_USERNAME: root
       DATABASE_PASSWORD: 123456
       DATABASE_NAME: customers
+      SECRET: 3ZZK5Q7CDQLV210642W7ZWXC6NB3IFQJ
     depends_on:
       - postgres
 

@@ -3,8 +3,9 @@ import { Customer } from "../../../../src/domain/models/customer";
 
 // getById returns a customer when a valid id is provided
 it('should return a customer when a valid id is provided', async () => {
-    const mockCustomer = new Customer();
-    mockCustomer.id = '01a7dc1a-4db2-4703-a085-3f7ecfdaf182';
+    const id = '01a7dc1a-4db2-4703-a085-3f7ecfdaf182';
+    const mockCustomer = new Customer({ id, firstName: 'John', lastName: 'Doe' });
+    mockCustomer.id = id;
     mockCustomer.firstName = 'John';
     mockCustomer.lastName = 'Doe';
     mockCustomer.email = 'john.doe@example.com';

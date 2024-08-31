@@ -5,11 +5,11 @@ import BadError from "../../../src/infrastructure/errors/bad-error";
 
 // Returns customer when valid ID is provided
 it('should return customer when valid ID is provided', async () => {
+    const id = '01a7dc1a-4db2-4703-a085-3f7ecfdaf182';
     const mockCustomerAdapterPort = {
-        getById: jest.fn().mockResolvedValue(new Customer())
+        getById: jest.fn().mockResolvedValue(new Customer({ id, firstName: 'John', lastName: 'Doe' }))
     } as unknown as CustomerAdapterPort;
     const customerService = new CustomerService(mockCustomerAdapterPort);
-    const id = '01a7dc1a-4db2-4703-a085-3f7ecfdaf182';
     const correlationId = 'test-correlation-id';
     const customer = await customerService.getById(id, correlationId);
     expect(customer).toBeInstanceOf(Customer);
@@ -40,12 +40,13 @@ it('should handle null or undefined correlationId gracefully', async () => {
 
 // Successfully creates a new customer when email does not exist
 it('should create a new customer when email does not exist', async () => {
+    const id = '01a7dc1a-4db2-4703-a085-3f7ecfdaf182';
     const mockCustomerAdapterPort = {
         getByEmail: jest.fn().mockResolvedValue(null),
-        create: jest.fn().mockResolvedValue({ id: '01a7dc1a-4db2-4703-a085-3f7ecfdaf182', firstName: 'John', lastName: 'Doe', email: 'john.doe@example.com', active: true })
+        create: jest.fn().mockResolvedValue({ id, firstName: 'John', lastName: 'Doe', email: 'john.doe@example.com', active: true })
     } as unknown as CustomerAdapterPort;
     const customerService = new CustomerService(mockCustomerAdapterPort);
-    const customer = new Customer();
+    const customer = new Customer({ id, firstName: 'John', lastName: 'Doe' });
     customer.firstName = 'John';
     customer.lastName = 'Doe';
     customer.email = 'john.doe@example.com';
@@ -58,12 +59,13 @@ it('should create a new customer when email does not exist', async () => {
 
 // Throws BadError when email already exists
 it('should throw BadError when email already exists', async () => {
+    const id = '01a7dc1a-4db2-4703-a085-3f7ecfdaf182';
     const mockCustomerAdapterPort = {
-        getByEmail: jest.fn().mockResolvedValue({ id: '01a7dc1a-4db2-4703-a085-3f7ecfdaf182', firstName: 'Jane', lastName: 'Doe', email: 'jane.doe@example.com', active: true }),
+        getByEmail: jest.fn().mockResolvedValue({ id, firstName: 'Jane', lastName: 'Doe', email: 'jane.doe@example.com', active: true }),
         create: jest.fn()
     } as unknown as CustomerAdapterPort;
     const customerService = new CustomerService(mockCustomerAdapterPort);
-    const customer = new Customer();
+    const customer = new Customer({ id, firstName: 'Jane', lastName: 'Doe' });
     customer.firstName = 'Jane';
     customer.lastName = 'Doe';
     customer.email = 'jane.doe@example.com';
@@ -75,12 +77,13 @@ it('should throw BadError when email already exists', async () => {
 
 // Successfully updates customer when email is unique and valid
 it('should successfully update customer when email is unique and valid', async () => {
+    const id = '01a7dc1a-4db2-4703-a085-3f7ecfdaf182';
     const mockCustomerAdapterPort = {
         getByEmail: jest.fn().mockResolvedValue(null),
         update: jest.fn().mockResolvedValue(undefined)
     } as unknown as CustomerAdapterPort;
     const customerService = new CustomerService(mockCustomerAdapterPort);
-    const customer = new Customer();
+    const customer = new Customer({ id, firstName: 'John', lastName: 'Doe' });
     customer.id = '01a7dc1a-4db2-4703-a085-3f7ecfdaf182';
     customer.firstName = 'John';
     customer.lastName = 'Doe';
@@ -95,7 +98,8 @@ it('should successfully update customer when email is unique and valid', async (
 
 // Throws BadError if email already exists for another customer
 it('should throw BadError if email already exists for another customer', async () => {
-    const existingCustomer = new Customer();
+    const id = '01a7dc1a-4db2-4703-a085-3f7ecfdaf182';
+    const existingCustomer = new Customer({ id, firstName: 'John', lastName: 'Doe' });
     existingCustomer.id = '01a7dc1a-4db2-4703-a085-3f7ecfdaf183';
     existingCustomer.firstName = 'Jane';
     existingCustomer.lastName = 'Doe';
@@ -106,7 +110,7 @@ it('should throw BadError if email already exists for another customer', async (
         update: jest.fn()
     } as unknown as CustomerAdapterPort;
     const customerService = new CustomerService(mockCustomerAdapterPort);
-    const customer = new Customer();
+    const customer = new Customer({ id, firstName: 'John', lastName: 'Doe' });
     customer.id = '01a7dc1a-4db2-4703-a085-3f7ecfdaf182';
     customer.firstName = 'John';
     customer.lastName = 'Doe';

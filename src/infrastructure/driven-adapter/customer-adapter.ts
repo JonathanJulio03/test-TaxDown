@@ -40,5 +40,5 @@ export class CustomerAdapter implements CustomerAdapterPort {
     }
     async getByEmail(email: string, correlationId: string): Promise<Customer | null> {
         return this.customerRepository.findOneBy({ email });
-    }
+    }    
 }
